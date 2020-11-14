@@ -210,7 +210,7 @@ Resources:
       EnablePerformanceInsights: false
       Engine: mysql
       EngineVersion: 5.7
-      MasterUsername: master
+      MasterUsername: admin
       MasterUserPassword: Test1234!
       StorageType: gp2
       AllocatedStorage: 10
