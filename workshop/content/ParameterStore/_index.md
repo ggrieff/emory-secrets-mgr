@@ -35,7 +35,8 @@ mysql -h $MYSQL_HOST -u $DBUSER -p`aws ssm get-parameter \
 ```
 
 Breaking this command down:
-- Using the enviorment variables for your RDS EndPoint and MasterUserName gathered earlier
+
+- Using the enviorment variables for your RDS EndPoint and MasterUserName gathered earlier. 
 - Embedding aws ssm -get-parameter retrieves the parameter value you just created for the -p (password) switch.
 - The --with-decription flag decrypts the secure string value
 - The --query Parameter.Value only returns that element from the JSON response
@@ -74,6 +75,7 @@ aws rds modify-db-instance --db-instance-identifier \
        | sed -e 's/^"//' -e 's/"$//'`
 ```
 Breaking this command down:
+
 - Using the AWS CLI for RDS
 - Find the instance identifier of the the only RDS instance in the account.
 - Decrypt the value for secure secret, NewMasterUserPWD, stored in Parameter store
@@ -91,4 +93,6 @@ mysql -h $MYSQL_HOST -u $DBUSER -p`aws ssm get-parameter \
 SELECT * FROM USERINFO;
 ```
 
-Let's move on to [AWS Secrets Manager](https://aws.amazon.com/secrets-manager/)!  Click the right arrow.
+Confirm that you are able to see the contents of the USERINFO table created during setup.
+
+Now, let's move on to [AWS Secrets Manager](https://aws.amazon.com/secrets-manager/)!  Click the right arrow.
