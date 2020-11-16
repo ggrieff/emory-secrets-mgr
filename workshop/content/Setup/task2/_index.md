@@ -1,7 +1,7 @@
 +++
 title = "Setup Resources"
 chapter = true
-weight = 20
+weight = 2
 +++
 
 Using [AWS Cloudformation](https://console.aws.amazon.com/cloudformation/home#/stacks) launch a stack to configure your lab enviorment using the button below.
