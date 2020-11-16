@@ -1,5 +1,5 @@
 +++
-title = "Secrets Manager"
+title = "Rotating Secrets"
 chapter = true
 weight = 30
 +++

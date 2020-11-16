@@ -1,7 +1,7 @@
 +++
 title = "Parameter Store"
 chapter = true
-weight = 10
+weight = 20
 +++
 
 In this lab you will use AWS Systems Manager - Parameter Store to save and retrieve the masteruser's password for your MySQL database.
@@ -27,7 +27,11 @@ Create a parameter to store the MasterUser's password for your RDS MySQL databas
 In your Cloud9 terminal, use the below command to retrieve the password, and connect to MySQL
 
 ```
-mysql -h $MYSQL_HOST -u $DBUSER -p`aws ssm get-parameter --name MasterUserAdminPWD --with-decryption --query Parameter.Value|sed -e 's/^"//' -e 's/"$//'` mylab
+mysql -h $MYSQL_HOST -u $DBUSER -p`aws ssm get-parameter \
+    --name MasterUserAdminPWD \
+    --with-decryption --query Parameter.Value \
+    |sed -e 's/^"//' -e 's/"$//'` \
+  mylab
 ```
 
 Breaking this command down:
@@ -54,12 +58,20 @@ aws ssm put-parameter --name NewMasterUserPWD --type=SecureString --value "NewPa
 
 Validate that you can retieve the password.
 ```
-aws ssm get-marater --name NewMasterUserPWD
+aws ssm get-parameter --name NewMasterUserPWD
 ```
 
 Now, update your RDS instance to this new password
 ```
-aws rds modify-db-instance --db-instance-identifier `aws rds describe-db-instances --region $AWSREGION --query 'DBInstances[*].DBInstanceIdentifier'|jq -r '.[0]'` --master-user-password `aws ssm get-parameter --name NewMasterUserPWD --with-decryption --query Parameter.Value | sed -e 's/^"//' -e 's/"$//'`
+aws rds modify-db-instance --db-instance-identifier \
+   `aws rds describe-db-instances \
+     --region $AWSREGION \
+     --query 'DBInstances[*].DBInstanceIdentifier' \
+     |jq -r '.[0]'` \
+    --master-user-password \
+      `aws ssm get-parameter --name NewMasterUserPWD \
+       --with-decryption --query Parameter.Value  \
+       | sed -e 's/^"//' -e 's/"$//'`
 ```
 Breaking this command down:
 - Using the AWS CLI for RDS
@@ -71,7 +83,11 @@ With the command running Go to the [RDS Console](https://console.aws.amazon.com/
 
 Now, once again validate connectivity.
 ```
-mysql -h $MYSQL_HOST -u $DBUSER -p`aws ssm get-parameter --name NewMasterUserPWD --with-decryption --query Parameter.Value|sed -e 's/^"//' -e 's/"$//'` mylab
+mysql -h $MYSQL_HOST -u $DBUSER -p`aws ssm get-parameter \
+    --name NewMasterUserPWD --with-decryption \
+    --query Parameter.Value \
+    |sed -e 's/^"//' -e 's/"$//'` \
+  mylab
 SELECT * FROM USERINFO;
 ```
 
