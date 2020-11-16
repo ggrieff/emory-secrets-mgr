@@ -9,12 +9,13 @@ In the same fashion you did in the Parameter Store lab, you can manually rotate 
 Let's start by using the Secrets Manager CLI command to generate a random secure password.  Using your **AWS Cloud9** terminal issue the following command: 
 
 ```
-aws secretsmanager get-random-password | jq -r .RandomPassword
+aws secretsmanager get-random-password --exclude-punctuation | jq -r .RandomPassword
 ```
 
 Run this command to generate a credentials file from your current secret.
-``` ssh
-aws secretsmanager get-secret-value --secret-id MySQLAdminPWD --query SecretString >> mycreds.json
+
+``` 
+aws secretsmanager get-secret-value --secret-id MySQLAdminPWD --query SecretString --output text > mycreds.json
 ```
 
 Using the Cloud9 IDE update the mycreds.json file and replace the password with your randomly generated string.
@@ -43,17 +44,40 @@ aws secretsmanager put-secret-value --secret-id MySQLAdminPWD --secret-string fi
 }
 ```
 
+Go to the [AWS Secrets Manager Console](https://console.aws.amazon.com/secretsmanager/home) and validate your update by retrieving your secret and looking at the plain text value.
+
+{{% img "Secret.png" "Credentials" %}} 
+
+{{% img "retrieve value.png" "Credentials" %}} 
+
+{{% img "plaintext.png" "Credentials" %}} 
+
 And now, update your RDS MySQL database to use this value for its MasterUser's password.
 
-Validate connectivity.
+```
+aws rds modify-db-instance --db-instance-identifier \
+   `aws rds describe-db-instances \
+     --region $AWSREGION \
+     --query 'DBInstances[*].DBInstanceIdentifier' \
+     |jq -r '.[0]'` \
+    --master-user-password \
+      `aws secretsmanager get-secret-value \
+    --secret-id MySQLAdminPWD --query SecretString --output text \
+    | jq -r .password`
+```
+
+Confirm the RDS database credentials are updating and wait for the database to reach **Available** state.
+
+{{% img "resetting creds.png" "Credentials" %}} 
+
+Validate connectivity using the below command in your Cloud9 Environment.
 
 ```
-mysql -h $MYSQL_HOST -u $DBUSER -p`aws ssm get-parameter \
-    --name NewMasterUserPWD --with-decryption \
-    --query Parameter.Value \
-    |sed -e 's/^"//' -e 's/"$//'` \
+mysql -h $MYSQL_HOST -u $DBUSER -p`aws secretsmanager get-secret-value \
+    --secret-id MySQLAdminPWD --query SecretString --output text \
+    | jq -r .password` \
   mylab
 SELECT * FROM USERINFO;
 ```
 
-{{% img "Secrets Mgr cover image.png" "Secrets Manager" %}} 
+{{% img "final.png" "Credentials" %}} 
