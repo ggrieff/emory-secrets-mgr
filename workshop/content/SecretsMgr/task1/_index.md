@@ -19,7 +19,7 @@ On the Store a new secret dialog make the following choices:
 
 {{% img "Create-Secret.png" "Secrets Manager" %}} 
 
-7. Name your secret and give it a description.  **MySQLAdminPWD
+7. Name your secret and give it a description.  **MySQLAdminPWD**
 8. Click Next
 
 {{% img "Create-Secret2.png" "Secrets Manager" %}} 
@@ -35,3 +35,25 @@ On the Store a new secret dialog make the following choices:
 
 {{% img "Create-Secret5.png" "Secrets Manager" %}} 
 
+Validate you stored secret with the below command:
+
+```
+aws secretsmanager get-secret-value --secret-id MySQLAdminPWD
+```
+
+{{% notice tip %}}
+See the contents of SecretString, this contains a key value pair string for the full details needed to connect to your RDS database as the masteruser, including the username, password, host, port, and database.
+{{% /notice %}} 
+
+``` json
+{
+    "ARN": "arn:aws:secretsmanager:us-east-1:123481740215:secret:MySQLAdminPWD-tmfbng",
+    "Name": "MySQLAdminPWD",
+    "VersionId": "44498380-ff47-4b97-bade-18e226958260",
+    "SecretString": "{\"username\":\"admin\",\"password\":\"NewPassword123\",\"engine\":\"mysql\",\"host\":\"rds-mysql-lab.cnsxdqacwvrb.us-east-1.rds.amazonaws.com\",\"port\":3306,\"dbname\":\"mylab\",\"dbInstanceIdentifier\":\"rds-mysql-lab\"}",
+    "VersionStages": [
+        "AWSCURRENT"
+    ],
+    "CreatedDate": 1605546490.689
+}
+```
