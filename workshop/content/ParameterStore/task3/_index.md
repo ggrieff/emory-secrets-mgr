@@ -16,6 +16,9 @@ Validate that you can retieve the password.
 aws ssm get-parameter --name NewMasterUserPWD
 ```
 
+{{% notice note %}}
+Notice the password value is **Encrypted**.  We will decrypt it in the next command when setting the masteruser password to the stored secure string.{{% /notice %}}  
+
 Now, update your RDS instance to this new password
 ```
 aws rds modify-db-instance --db-instance-identifier \
