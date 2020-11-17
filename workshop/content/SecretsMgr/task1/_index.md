@@ -10,32 +10,32 @@ Open the [AWS Secrets Manager](https://console.aws.amazon.com/secretsmanager/hom
 
 On the Store a new secret dialog make the following choices:
 
-1. Leave **Credentials for RDS database** selected
-2. Leave the default username as **admin**
-3. Specify the new password established in the prior lab **NewPassword123**; or the password you chose.
-4. Use the DefaultEncryptionKey
-5. Select the **rds-mysql-lab** RDS MySQL database you created during setup
-6. Click next
+- Leave **Credentials for RDS database** selected
+- Leave the default username as **admin**
+- Specify the new password established in the prior lab **NewPassword123**; or the password you chose.
+- Use the DefaultEncryptionKey
+- Select the **rds-mysql-lab** RDS MySQL database you created during setup
+- Click next
 
 {{% img "Create-Secret.png" "Secrets Manager" %}} 
 
-7. Name your secret and give it a description.  **MySQLAdminPWD**
-8. Click Next
+- Name your secret and give it a description.  **MySQLAdminPWD**
+- Click Next
 
 {{% img "Create-Secret2.png" "Secrets Manager" %}} 
 
-9. Leave the default, disabling rotation, on the next dialog
+- Leave the default, disabling rotation, on the next dialog
 
 {{% img "Create-Secret3.png" "Secrets Manager" %}} 
 
-10. Review the different code samples illustrating ways to retreive your secret.  
-11. Click Store to save your new secret
+- Review the different code samples illustrating ways to retreive your secret.  
+- Click Store to save your new secret
 
 {{% img "Create-Secret4.png" "Secrets Manager" %}} 
 
 {{% img "Create-Secret5.png" "Secrets Manager" %}} 
 
-Validate you stored secret with the below command:
+Using your [AWS Cloud9](https://console.aws.amazon.com/cloud9/home) environment, validate you stored secret with the below command:
 
 ```
 aws secretsmanager get-secret-value --secret-id MySQLAdminPWD
