@@ -10,6 +10,8 @@ Using [AWS Cloudformation](https://console.aws.amazon.com/cloudformation/home#/s
 | ----- | ----- |
 | <a href="https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/quickcreate?templateUrl=https%3A%2F%2Fggrieff-customer-share.s3.amazonaws.com%2Fbuild.yml&stackName=labstack&param_TemplateName=labstack" target="_blank"><img src='https://master.dlwhmwrl92mne.amplifyapp.com/setup/task2/cloudformation-launch-stack.png' alt="Launch Stack" style="float:left"></a> | [**build.yml**](https://ggrieff-customer-share.s3.amazonaws.com/build.yml) |
 
+{{% img "CloudFormation-Stack.png" "Cfn" %}}  
+
 Once your stack is created goto [AWS Cloud9](https://console.aws.amazon.com/cloud9/home) and Open the IDE.  Using the (+) open a terminal window.  Leave this tab open for the duration of the workshop we will be using it in future sections.
 
 {{% img "labstack-Cloud9-IDE-AWS-Cloud9.png" "Console" %}}  
