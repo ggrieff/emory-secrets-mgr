@@ -6,7 +6,7 @@ weight = 30
 
 Now you will establish a new parameter with a new MasterUser password, then you will update your RDS instance to use this new password.  However, this time you will use the [AWS CLI]() to create the parameter, then update the database with the value.
 
-Create a new parameter with a secure string.  *Feel free to substitute a password of your choosing.*"
+Create a new parameter with a secure string.  *Feel free to substitute a password of your choosing.  Only printable ASCII characters besides ‘/’, ‘@’, ‘“’, ' ' may be used.*"
 ```
 aws ssm put-parameter --name NewMasterUserPWD --type=SecureString --value "NewPassword123"
 ```
