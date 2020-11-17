@@ -24,4 +24,4 @@ Upon return to the secret details page you should see that rotation is enabling.
 You can browse to the [AWS Cloudformation Console]() and monitor the progress if you wish.
 {{% /notice %}} 
 
-While we are not going to actually rotate the credentials, take a few minutes to go to the [AWS Lambda Console](https://console.aws.amazon.com/lambda/home#/functions)
+While we are not going to actually rotate the credentials, take a few minutes to go to the [AWS Lambda Console](https://console.aws.amazon.com/lambda/home#/functions) and review the code and comments in the rotation function.
